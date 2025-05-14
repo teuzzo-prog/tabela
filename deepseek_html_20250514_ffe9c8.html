@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno - Sistema Acad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .form-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .form-section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .required:after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: #2ecc71;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="cadastroAluno" onsubmit="return validarFormulario()">
+        <div class="form-header">
+            <h1>Cadastro de Aluno</h1>
+            <p>Sistema Acadêmico - Versão 2.1</p>
+        </div>
+        
+        <!-- Seção 1: Dados Acadêmicos -->
+        <div class="form-section">
+            <h2>Dados Acadêmicos</h2>
+            
+            <div class="form-group">
+                <label for="codigo" class="required">Código do Aluno</label>
+                <input type="text" id="codigo" name="codigo" placeholder="B250-XXXXX" readonly>
+                <small>Preenchimento automático</small>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tipoMatricula" class="required">Tipo de Matrícula</label>
+                    <select id="tipoMatricula" name="tipoMatricula" required>
+                        <option value="">Selecione...</option>
+                        <option value="AUTOAVALIATIVO">Autoavaliativo</option>
+                        <option value="STANDARD">Standard</option>
+                        <option value="PREMIUM">Premium</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="turma" class="required">Turma</label>
+                    <input type="text" id="turma" name="turma" placeholder="2025-3A" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="turno" class="required">Turno</label>
+                    <select id="turno" name="turno" required>
+                        <option value="">Selecione...</option>
+                        <option value="MANHA">Manhã</option>
+                        <option value="TARDE">Tarde</option>
+                        <option value="NOITE">Noite</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção 2: Dados Pessoais -->
+        <div class="form-section">
+            <h2>Dados Pessoais</h2>
+            
+            <div class="form-group">
+                <label for="nome" class="required">Nome Completo</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email" class="required">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="exemplo@dominio.edu.br" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento</label>
+                    <input type="date" id="dataNascimento" name="dataNascimento">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="celular" class="required">Celular</label>
+                    <input type="tel" id="celular" name="celular" placeholder="(00) 00000-0000" required>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção 3: Endereço -->
+        <div class="form-section">
+            <h2>Endereço</h2>
+            
+            <div class="form-row">
+                <div class="form-group" style="flex: 3;">
+                    <label for="logradouro" class="required">Logradouro</label>
+                    <input type="text" id="logradouro" name="logradouro" required>
+                </div>
+                
+                <div class="form-group" style="flex: 1;">
+                    <label for="numero">Número</label>
+                    <input type="text" id="numero" name="numero">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="complemento">Complemento</label>
+                <input type="text" id="complemento" name="complemento">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bairro" class="required">Bairro</label>
+                    <input type="text" id="bairro" name="bairro" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cep" class="required">CEP</label>
+                    <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group" style="flex: 3;">
+                    <label for="cidade" class="required">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" required>
+                </div>
+                
+                <div class="form-group" style="flex: 1;">
+                    <label for="estado" class="required">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">UF</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <!-- Todos os estados -->
+                        <option value="SP">SP</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seção 4: Informações Adicionais -->
+        <div class="form-section">
+            <h2>Informações Adicionais</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="exAluno">É ex-aluno?</label>
+                    <select id="exAluno" name="exAluno">
+                        <option value="NAO">Não</option>
+                        <option value="SIM">Sim</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="necessidadesEspeciais">Necessidades Especiais</label>
+                    <input type="text" id="necessidadesEspeciais" name="necessidadesEspeciais">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="medicamentos">Medicamentos Controlados</label>
+                <textarea id="medicamentos" name="medicamentos" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="observacoes">Outras Observações</label>
+                <textarea id="observacoes" name="observacoes" rows="4"></textarea>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn-submit">Cadastrar Aluno</button>
+    </form>
+
+    <script>
+        // Gerar código de aluno automático
+        document.addEventListener('DOMContentLoaded', function() {
+            const codigoAluno = 'B250-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('codigo').value = codigoAluno;
+            
+            // Máscaras para telefone e CEP
+            document.getElementById('telefone').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '')
+                    .replace(/^(\d{2})(\d)/g, '($1) $2')
+                    .replace(/(\d{4})(\d)/, '$1-$2')
+                    .substr(0, 14);
+            });
+            
+            document.getElementById('celular').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '')
+                    .replace(/^(\d{2})(\d)/g, '($1) $2')
+                    .replace(/(\d{5})(\d)/, '$1-$2')
+                    .substr(0, 15);
+            });
+            
+            document.getElementById('cep').addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '')
+                    .replace(/^(\d{5})(\d)/, '$1-$2')
+                    .substr(0, 9);
+            });
+        });
+        
+        function validarFormulario() {
+            // Validação básica - em produção, implementar validação mais robusta
+            const email = document.getElementById('email').value;
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Por favor, insira um e-mail válido');
+                return false;
+            }
+            
+            alert('Formulário enviado com sucesso!');
+            return true;
+        }
+    </script>
+</body>
+</html>
